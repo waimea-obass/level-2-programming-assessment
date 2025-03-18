@@ -1,9 +1,11 @@
+import java.security.ProtectionDomain
+
 /**
  * =====================================================================
  * Programming Project for NCEA Level 2, Standard 91896
  * ---------------------------------------------------------------------
- * Project Name:   PROJECT NAME HERE
- * Project Author: PROJECT AUTHOR HERE
+ * Project Name:   OK GUNS
+ * Project Author: Ollie Bass
  * GitHub Repo:    GITHUB REPO URL HERE
  * ---------------------------------------------------------------------
  * Notes:
@@ -12,8 +14,16 @@
  */
 
 
+const val SHOOT = 'S'
+const val PROTECT = 'P'
+const val RELOAD = 'R'
+const val EMPTY = 0
 
 fun main() {
-    println("Hello World!")
+    val bullets = mutableListOf<Int>() = EMPTY
+    val protects = mutableListOf<Int>()
+
+
 }
+
 
