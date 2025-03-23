@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 /**
  * =====================================================================
  * Programming Project for NCEA Level 2, Standard 91896
@@ -15,23 +17,35 @@
 const val SHOOT = 'S'
 const val PROTECT = 'P'
 const val RELOAD = 'R'
+const val DOUBLE = 'D'
 const val EMPTY = 0
 
 fun main() {
-    val actions = mutableListOf<String>()
     val playerList = mutableListOf<String>()
-    val player1HP = mutableListOf<Int>()
-    val player2HP = mutableListOf<Int>()
     val p1Bullets = mutableListOf<Int>()
+    val p2Bullets = mutableListOf<Int>()
+    var player1HP = 3
+    var player2HP = 3
     getPlayer(playerList)
     println()
-    //Shows how many bullets P1 has
-    println(showP1Bullets("P1 you have $p1Bullets amount of bullets"))
+    p1Bullets.add(EMPTY)
+    p2Bullets.add(EMPTY)
 
-    getActionP1(playerList[0])
+    //Starts game with the while loop
+    while (true) {
+        //Shows players their current bullet count. (This changes as players reload and shoot)
+        showP1Bullets(playerList[0] + ", you have $p1Bullets amount of bullets")
+        showP2Bullets(playerList[1] + ", you have $p2Bullets amount of bullets")
 
+        //Lets the player choose what they want to do
+        getActionP1(playerList[0])
+    //check(checkIfViable())
+        //getActionP2(playerList[1])
+    }
 
 }
+
+
 
 fun getString(prompt: String): String {
     var userInput: String
@@ -61,16 +75,34 @@ fun showP1Bullets(p1Bullets: String): Int {
 
     return p1Bullets.count()
 }
+fun showP2Bullets(p2Bullets: String): Int {
 
-fun getActionP1(p1Bullets: String): String {
-    var playerAction = getString("Player 1, what do you want to do? Either 'S': Shoot " +
+    return p2Bullets.count()
+}
+
+fun getActionP1(playerAction: String): String {
+    val playerAction = getString("Player 1, what do you want to do? Either 'S': [Shoot] " +
             "'R': Reload or 'P': Protect")
     if (playerAction.isNotBlank()) {
         println("Thank you for choosing an option")
     }
-    return  playerAction
-
-}
+            return  playerAction
+    }
+////fun checkIfViable(playerAction: String, p1Bullets: MutableList<Int>): Boolean {
+//    while (playerAction = SHOOT) {
+//        if p1Bullets[0] = 0 {
+//            return " don't have enough"
+//        }
+//        else {
+//            return true
+//        }
+//    }
+//}
+ fun p1Reload(playerAction: String, p1Bullets: MutableList<Int>): Boolean {
+     if (playerAction == RELOAD) {
+         p1Bullets.add(1)
+     }
+ }
 
 
 
