@@ -38,9 +38,17 @@ fun main() {
     while (true) {
         //Lets the player choose what they want to do
         getActionP1(playerList[0])
+        if (action == SHOOT) {
+            if (bulletList[0] == 0) {
+                println("You don't have any bullets!")
+            }
+            else if (bulletList[0] != 0) {
+                print("You have bullets!")
+                val kill = 1
+            }
+        }
 
-    //check(checkIfViable())
-        //getActionP2(playerList[1])
+
     }
 
 }
@@ -56,16 +64,6 @@ fun getString(prompt: String): String {
         if (userInput.isNotBlank()) break
     }
     return userInput
-}
-fun getChar(prompt: String): Char {
-    var actionInput: Char
-    while (true) {
-        print(prompt)
-
-        actionInput = readln()
-        if (actionInput.isNotBlank()) break
-    }
-    return actionInput
 }
 
 fun getPlayer(playerList: MutableList<String>) {
@@ -93,13 +91,30 @@ fun showBullets(bulletsList: MutableList<String>): String {
 }
 
 fun getActionP1(playerList: String): Char {
-    var playerAction: Char = getString(playerList[0] + ", what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect")
-    while (playerAction = SHOOT) {
-        continue
+    while(true) {
+        val playerAction =
+            getString("Hey Big " + playerList[0] + ", what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
+        val action = playerAction.uppercase().first()
+
+        if (action == SHOOT || action == RELOAD || action == PROTECT) {
+            return action
+        }
     }
 
-            return  playerAction
-    }
+}
+fun checkP1Shoot(action: Char, bulletsList: MutableList<String>) {
+    if (action == SHOOT)
+        if (bulletList[1] != 0) {
+            println("You have enough bullets to shoot!")
+        }
+        else {
+            println("You don't have enough bullets to shoot!")
+            getActionP1(action)
+        }
+}
+
+
+
 ////fun checkIfViable(playerAction: String, p1Bullets: MutableList<Int>): Boolean {
 //    while (playerAction = SHOOT) {
 //        if p1Bullets[0] = 0 {
