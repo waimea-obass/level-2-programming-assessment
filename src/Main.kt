@@ -1,4 +1,4 @@
-@file:Suppress("NAME_SHADOWING")
+@file:Suppress("NAME_SHADOWING", "UNUSED_CHANGED_VALUE")
 
 /**
  * =====================================================================
@@ -38,20 +38,15 @@ fun main() {
     while (true) {
         //Lets the player choose what they want to do
         getActionP1(playerList[0])
-        if (action == SHOOT) {
-            if (bulletList[0] == 0) {
-                println("You don't have any bullets!")
-            }
-            else if (bulletList[0] != 0) {
-                print("You have bullets!")
-                val kill = 1
+        //
+//        doAction(playerList[0])
             }
         }
 
 
-    }
 
-}
+
+
 
 
 
@@ -96,22 +91,41 @@ fun getActionP1(playerList: String): Char {
             getString("Hey Big " + playerList[0] + ", what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
         val action = playerAction.uppercase().first()
 
+
         if (action == SHOOT || action == RELOAD || action == PROTECT) {
             return action
+//            doAction(playerList[0])
         }
+
     }
 
 }
-fun checkP1Shoot(action: Char, bulletsList: MutableList<String>) {
-    if (action == SHOOT)
-        if (bulletList[1] != 0) {
-            println("You have enough bullets to shoot!")
-        }
-        else {
-            println("You don't have enough bullets to shoot!")
-            getActionP1(action)
-        }
+
+fun doAction(p1Bullets: Int, action: Char): Int {
+    var p1Bullets = p1Bullets
+    if (action == RELOAD) {
+        p1Bullets++
+        println("You reloaded! You now have" + p1Bullets + "amount of bullets")
+     }
+    return p1Bullets
 }
+
+fun checkP1Shoot(action: Char, bulletsList: MutableList<String>): String {
+    var p1Kill = 0
+    while (action == SHOOT) {
+        if (bulletsList[0] != ("$EMPTY")) {
+            println("You have enough bullets to shoot!")
+            p1Kill++
+            break
+        } else if (bulletsList[0] == ("$EMPTY")) {
+            println("You don't have enough bullets to shoot!")
+            getActionP1("$action")
+        }
+    }
+        return (" Your gun did $p1Kill damage")
+    }
+
+
 
 
 
