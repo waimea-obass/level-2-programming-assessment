@@ -22,12 +22,12 @@ const val EMPTY = 0
 
 fun main() {
     val playerList = mutableListOf<String>()
-    val bulletsList = mutableListOf<String>()
+    val bulletsList = mutableListOf<Int>()
 
-    showBullets(bulletsList)
-    var player1HP = 3
-    var player2HP = 3
+
     getPlayer(playerList)
+    setupBullets(bulletsList)
+
     println()
 
 
@@ -36,12 +36,38 @@ fun main() {
         println(playerList[1] + ", you have " + bulletsList[1] + " amount of bullets")
     //Starts game with the while loop
     while (true) {
-        //Lets the player choose what they want to do
-        getActionP1(playerList[0])
-        //
-//        doAction(playerList[0])
+        // Player 1
+        while (true) {
+            //Lets the player choose what they want to do
+            val action = getActionP1(playerList[0])
+
+            when (action) {
+                SHOOT -> {
+                    if (checkBullets(bulletsList[0]) == true) {
+                        bulletsList[0]--
+                        println("You shot, congrats!")
+                        // etc...
+
+                        break
+                    }
+                }
+
+                PROTECT -> {
+                    println("You have protected yourself!")
+                    break
+                }
+
+                RELOAD -> {
+                    bulletsList[0]++
+                    println("You reloaded, risky!")
+                    break
+                }
             }
         }
+        //
+//        doAction(playerList[0])
+    }
+}
 
 
 
@@ -69,61 +95,49 @@ fun getPlayer(playerList: MutableList<String>) {
     playerList.add(player1)
     playerList.add(player2)
     while (true) {
-        print(playerList)
         if (player1.isNotBlank()) break
         if (player2.isNotBlank()) break
     }
 }
-fun showBullets(bulletsList: MutableList<String>): String {
-
-    var player1Bullets = 0
-    var player2Bullets = 0
-    bulletsList.add(player1Bullets.toString())
-    bulletsList.add(player2Bullets.toString())
-    println(bulletsList.size)
-    return ("$bulletsList")
-
+fun setupBullets(bulletsList: MutableList<Int>) {
+    bulletsList.add(0)
+    bulletsList.add(0)
 }
 
-fun getActionP1(playerList: String): Char {
+fun getActionP1(playerName: String): Char {
     while(true) {
         val playerAction =
-            getString("Hey Big " + playerList[0] + ", what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
+            getString(" $playerName, what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
         val action = playerAction.uppercase().first()
 
+        println(action)
 
         if (action == SHOOT || action == RELOAD || action == PROTECT) {
             return action
-//            doAction(playerList[0])
         }
 
     }
 
 }
 
-fun doAction(p1Bullets: Int, action: Char): Int {
-    var p1Bullets = p1Bullets
-    if (action == RELOAD) {
-        p1Bullets++
-        println("You reloaded! You now have" + p1Bullets + "amount of bullets")
-     }
-    return p1Bullets
-}
+//fun doReload(action: Char): Int {
+//        p1Bullets++
+//        println("You reloaded! You now have" + p1Bullets + "amount of bullets")
+//     }
+//    return p1Bullets
+//}
 
-fun checkP1Shoot(action: Char, bulletsList: MutableList<String>): String {
-    var p1Kill = 0
-    while (action == SHOOT) {
-        if (bulletsList[0] != ("$EMPTY")) {
-            println("You have enough bullets to shoot!")
-            p1Kill++
-            break
-        } else if (bulletsList[0] == ("$EMPTY")) {
-            println("You don't have enough bullets to shoot!")
-            getActionP1("$action")
-        }
+fun checkBullets(numBullets: Int): Boolean {
+
+    if (numBullets != EMPTY) {
+        println("You have enough bullets to shoot!")
+        return true
     }
-        return (" Your gun did $p1Kill damage")
+    else  {
+        println("You don't have enough bullets to shoot!")
+        return false
     }
+}
 
 
 
