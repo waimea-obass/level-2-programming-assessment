@@ -17,7 +17,7 @@
 const val SHOOT = 'S'
 const val PROTECT = 'P'
 const val RELOAD = 'R'
-const val DOUBLE = 'D'
+//const val DOUBLE = 'D'
 const val EMPTY = 0
 
 fun main() {
@@ -32,22 +32,22 @@ fun main() {
 
 
         //Shows players their current bullet count. (This changes as players reload and shoot)
-        println(playerList[0] + ", you have " + bulletsList[0] + " amount of bullets")
-        println(playerList[1] + ", you have " + bulletsList[1] + " amount of bullets")
+        println(playerList[0] + ", you have " + bulletsList[0] + " bullet/s")
+        println(playerList[1] + ", you have " + bulletsList[1] + " bullet/s")
     //Starts game with the while loop
     while (true) {
         // Player 1
         while (true) {
             //Lets the player choose what they want to do
-            val action = getActionP1(playerList[0])
+            val action = getAction(playerList[0])
 
             when (action) {
                 SHOOT -> {
-                    if (checkBullets(bulletsList[0]) == true) {
+                    //This function checks if you have enough bullets to shoot. If you don't it will return false, and you will have to do it again
+                    if (checkBullets(bulletsList[0])) {
                         bulletsList[0]--
                         println("You shot, congrats!")
-                        // etc...
-
+                        //After checking that you have a viable amount of bullets to shoot, you are allowed to shoot
                         break
                     }
                 }
@@ -64,9 +64,39 @@ fun main() {
                 }
             }
         }
-        //
-//        doAction(playerList[0])
+            // Player 2
+            while (true) {
+                //Lets the player choose what they want to do
+                val action = getAction(playerList[1])
+
+                when (action) {
+                    SHOOT -> {
+                        //This function checks if you have enough bullets to shoot. If you don't it will return false and you will have to do it again
+                        if (checkBullets(bulletsList[1])) {
+                            bulletsList[1]--
+                            println("You shot, congrats!")
+                            //After checking that you have a viable amount of bullets to shoot, you are allowed to shoot
+
+                            break
+                        }
+                    }
+
+                    PROTECT -> {
+                        println("You have protected yourself!")
+                        break
+                    }
+
+                    RELOAD -> {
+                        bulletsList[0]++
+                        println("You reloaded, risky!")
+                        break
+                    }
+                }
+        }
+
     }
+
+
 }
 
 
@@ -100,17 +130,16 @@ fun getPlayer(playerList: MutableList<String>) {
     }
 }
 fun setupBullets(bulletsList: MutableList<Int>) {
-    bulletsList.add(0)
-    bulletsList.add(0)
+    bulletsList.add(1)
+    bulletsList.add(1)
 }
 
-fun getActionP1(playerName: String): Char {
+fun getAction(playerName: String): Char {
     while(true) {
         val playerAction =
-            getString(" $playerName, what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
+            getString("$playerName, what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
         val action = playerAction.uppercase().first()
 
-        println(action)
 
         if (action == SHOOT || action == RELOAD || action == PROTECT) {
             return action
