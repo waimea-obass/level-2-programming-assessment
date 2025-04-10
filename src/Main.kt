@@ -6,10 +6,10 @@
  * ---------------------------------------------------------------------
  * Project Name:   OK GUNS
  * Project Author: Ollie Bass
- * GitHub Repo:    GITHUB REPO URL HERE
+ * GitHub Repo:    https://github.com/waimea-obass/level-2-programming-assessment
  * ---------------------------------------------------------------------
  * Notes:
- * PROJECT NOTES HERE
+ * This is a game called OK Guns
  * =====================================================================
  */
 
@@ -24,10 +24,8 @@ fun main() {
     val playerList = mutableListOf<String>()
     val bulletsList = mutableListOf<Int>()
     val healthList = mutableListOf<Int>()
-    val aftermathList = mutableListOf<String>()
+    val actionList = mutableListOf<String>()
     val aftermathCharList = mutableListOf<Char>()
-
-//    setupHealth(healthList)
     healthList.add(3)
     healthList.add(3)
 
@@ -36,18 +34,18 @@ fun main() {
     getPlayer(playerList)
     setupBullets(bulletsList)
 
-    //Shows players their current bullet count. (This changes as players reload and shoot)
     println(playerList[0] + ", you have " + bulletsList[0] + " bullet/s")
     println(playerList[1] + ", you have " + bulletsList[1] + " bullet/s")
 
 
     //Starts game with the while loop
     while (true) {
-
-        // Allow each player to have a turn
+        // Allows each player to have a turn
         for (player in listOf(0, 1)) {
-            val opponent = if (player == 0) 1 else 0
 
+            val opponent = if (player == 0) 1 else 0
+            //The current player swaps from player 1 to player 2 once the player 1 finishes their turn
+            //Vice versa with the opponent
             val currentPlayer = playerList[player]
             val currentOpponent = playerList[opponent]
 
@@ -61,23 +59,27 @@ fun main() {
                     if (checkBullets(bulletsList[player])) {
                         bulletsList[player]--
                         println("You shot, congrats!".red())
-                        aftermathList.add("SHOOT")
-                        println(aftermathList)
+                        //actionList holds the actions of both players
+                        actionList.add("SHOOT")
                         //After checking that you have a viable amount of bullets to shoot, you are allowed to shoot
+
+                        //The function gap adds spaces so the next player cannot see what the previous player did
                         gap()
                     }
                 }
 
                 PROTECT -> {
-                    println("You have protected yourself!")
-                    aftermathList.add("PROTECT")
+                    //Protecting stops you from getting damaged if the other player decides to shoot.
+                    println("You have protected yourself!".green())
+                    actionList.add("PROTECT")
                     gap()
                 }
 
                 RELOAD -> {
+                    //Reloading gives the player 1 bullet, with the risk of being shot
                     bulletsList[0]++
-                    println("You reloaded, risky!")
-                    aftermathList.add("RELOAD")
+                    println("You reloaded, risky!".blue())
+                    actionList.add("RELOAD")
                     gap()
                 }
             }
@@ -92,10 +94,10 @@ fun main() {
             println("Thank you, here's the aftermath!")
             println()
             println()
-        println(aftermathList)
+        println(actionList)
 
 
-            println(playerList[0] + " chose to " + aftermathList[0] + " and " + playerList[1] + " chose to " + aftermathList[1])
+            println(playerList[0] + " chose to " + actionList[0] + " and " + playerList[1] + " chose to " + actionList[1])
 
 
         showAftermath(aftermathCharList, playerList, healthList, "")
@@ -109,6 +111,9 @@ fun main() {
             println("Congratulations" + playerList[0] + ", you win!")
             break
         } else {
+            println("Nobody died yet so lets continue!")
+            println()
+//            clearLists(aftermathCharList, actionList)
             continue
         }
 
@@ -150,22 +155,11 @@ fun getString(prompt: String): String {
     }
     return userInput
 }
-//fun setupHealth(healthList: MutableList<Int>) {
-//    println("Before we start, how much health should Player 1 and Player 2 have?")
-//    val player1HP = getString("How much health should player 1 have? ")
-//    val player2HP = getString("How much health should you have? " )
-//    healthList.add(player1HP.toInt())
-//    healthList.add(player2HP.toInt())
-//    print(healthList)
-//    while (true) {
-//        if (player2HP.isNotBlank()) break
-//    }
-//}
 
 fun getPlayer(playerList: MutableList<String>) {
     //Gets player
 
-    val player1 = getString("Also, Player 1, what is your name? ")
+    val player1 = getString("Player 1, what is your name? ")
     val player2 = getString("Player 2, what is your name? ")
     playerList.add(player1)
     playerList.add(player2)
@@ -178,6 +172,7 @@ fun setupBullets(bulletsList: MutableList<Int>) {
 
 
 fun getAction(playerName: String, aftermathCharList: MutableList<Char> ): Char {
+    //Gets player's action as a Char which corresponds to a constant value
     while(true) {
         val playerAction = getString("$playerName, what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
         val action = playerAction.uppercase().first()
@@ -236,57 +231,19 @@ fun showAftermath(aftermathCharList: MutableList<Char>, playerList: List<String>
         return aftermath
     }
 }
-
-
-
-
-
-
-////fun checkIfViable(playerAction: String, p1Bullets: MutableList<Int>): Boolean {
-//    while (playerAction = SHOOT) {
-//        if p1Bullets[0] = 0 {
-//            return " don't have enough"
-//        }
-//        else {
-//            return true
-//        }
-//    }
-//}
-// fun p1Reload(playerAction: String, p1Bullets: MutableList<Int>): Char {
-//     if (playerAction = RELOAD) {
-//         p1Bullets.add(1)
-//         print(p1Bullets)
-//         println("You reloaded! You now have $bulletList amount of bullets")
-//     }
-//    return playerAction
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//fun clearLists(aftermathCharList: MutableList<Char>, actionList: MutableList<String>):Boolean {
+//    if (aftermathCharList.isNotEmpty() && actionList.isNotEmpty()) {
+//        aftermathCharList.removeAt(0)
+//        aftermathCharList.removeAt(0)
+//        actionList.removeAt(0)
+//        actionList.removeAt(0)
 //
-//            if p1Bullets[0] == EMPTY {
-//                println("You don't have enough bullets!")
-//                else if p1Bullets != EMPTY {
-//                println("Thank you for your choice!")
-//            }
-//            }
-//        }
+//    }
+
+//    return true
+//}
+
+
+
 
 
