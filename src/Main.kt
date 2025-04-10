@@ -8,8 +8,7 @@
  * Project Author: Ollie Bass
  * GitHub Repo:    https://github.com/waimea-obass/level-2-programming-assessment
  * ---------------------------------------------------------------------
- * Notes:
- * This is a game called OK Guns
+ * Notes: This is a game called OK Guns
  * =====================================================================
  */
 
@@ -19,7 +18,6 @@ const val PROTECT = 'P'
 const val RELOAD = 'R'
 //const val DOUBLE = 'D'
 const val EMPTY = 0
-
 fun main() {
     val playerList = mutableListOf<String>()
     val bulletsList = mutableListOf<Int>()
@@ -57,7 +55,7 @@ fun main() {
                 SHOOT -> {
                     //This function checks if you have enough bullets to shoot. If you don't it will return false, and you will have to do it again
                     if (checkBullets(bulletsList[player])) {
-                        bulletsList[player]--
+                        bulletsList[player]--  
                         println("You shot, congrats!".red())
                         //actionList holds the actions of both players
                         actionList.add("SHOOT")
@@ -66,7 +64,7 @@ fun main() {
                         //The function gap adds spaces so the next player cannot see what the previous player did
                         gap()
                     }
-                }
+                    }
 
                 PROTECT -> {
                     //Protecting stops you from getting damaged if the other player decides to shoot.
@@ -99,10 +97,11 @@ fun main() {
 
         println(playerList[0] + " chose to " + actionList[0] + " and " + playerList[1] + " chose to " + actionList[1])
 
-        // SHoew the result of the players actions
+        // Show the result of the players actions
         println(showAftermath(playerActions, playerList, healthList, ""))
         // And clear them out for next time
         playerActions.clear()
+        actionList.clear()
 
         println()
         println(playerList[0] + ", you have " + healthList[0] + " health and " + playerList[1] + ",  you have " + healthList[1] + " health.")
@@ -116,7 +115,6 @@ fun main() {
         } else {
             println("Nobody died yet so lets continue!")
             println()
-            clearLists(playerActions, actionList)
             continue
         }
 
