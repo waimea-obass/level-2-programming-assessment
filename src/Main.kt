@@ -25,7 +25,7 @@ fun main() {
     val bulletsList = mutableListOf<Int>()
     val healthList = mutableListOf<Int>()
     val actionList = mutableListOf<String>()
-    val aftermathCharList = mutableListOf<Char>()
+    val playerActions = mutableListOf<Char>()
     healthList.add(3)
     healthList.add(3)
 
@@ -51,7 +51,7 @@ fun main() {
 
             //Lets the player choose what they want to do
             println("Look away $currentOpponent!")
-            val action = getAction(currentPlayer, aftermathCharList)
+            val action = getAction(currentPlayer, playerActions)
 
             when (action) {
                 SHOOT -> {
@@ -97,10 +97,13 @@ fun main() {
         println(actionList)
 
 
-            println(playerList[0] + " chose to " + actionList[0] + " and " + playerList[1] + " chose to " + actionList[1])
+        println(playerList[0] + " chose to " + actionList[0] + " and " + playerList[1] + " chose to " + actionList[1])
 
+        // SHoew the result of the players actions
+        println(showAftermath(playerActions, playerList, healthList, ""))
+        // And clear them out for next time
+        playerActions.clear()
 
-        showAftermath(aftermathCharList, playerList, healthList, "")
         println()
         println(playerList[0] + ", you have " + healthList[0] + " health and " + playerList[1] + ",  you have " + healthList[1] + " health.")
 
@@ -113,7 +116,7 @@ fun main() {
         } else {
             println("Nobody died yet so lets continue!")
             println()
-//            clearLists(aftermathCharList, actionList)
+            clearLists(playerActions, actionList)
             continue
         }
 
@@ -231,17 +234,6 @@ fun showAftermath(aftermathCharList: MutableList<Char>, playerList: List<String>
         return aftermath
     }
 }
-//fun clearLists(aftermathCharList: MutableList<Char>, actionList: MutableList<String>):Boolean {
-//    if (aftermathCharList.isNotEmpty() && actionList.isNotEmpty()) {
-//        aftermathCharList.removeAt(0)
-//        aftermathCharList.removeAt(0)
-//        actionList.removeAt(0)
-//        actionList.removeAt(0)
-//
-//    }
-
-//    return true
-//}
 
 
 
