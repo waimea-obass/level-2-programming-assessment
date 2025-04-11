@@ -19,21 +19,21 @@ const val RELOAD = 'R'
 //const val DOUBLE = 'D'
 const val EMPTY = 0
 fun main() {
-    val playerList = mutableListOf<String>()
-    val bulletsList = mutableListOf<Int>()
-    val healthList = mutableListOf<Int>()
-    val actionList = mutableListOf<String>()
+    val playerNames = mutableListOf<String>()
+    val playerBullets = mutableListOf<Int>()
+    val playerHealths = mutableListOf<Int>()
+    val playerActionNames = mutableListOf<String>()
     val playerActions = mutableListOf<Char>()
-    healthList.add(3)
-    healthList.add(3)
+    playerHealths.add(3)
+    playerHealths.add(3)
 
     showInstructions()
 
-    getPlayer(playerList)
-    setupBullets(bulletsList)
+    getPlayer(playerNames)
+    setupBullets(playerBullets)
 
-    println(playerList[0] + ", you have " + bulletsList[0] + " bullet/s")
-    println(playerList[1] + ", you have " + bulletsList[1] + " bullet/s")
+    println(playerNames[0] + ", you have " + playerBullets[0] + " bullet/s")
+    println(playerNames[1] + ", you have " + playerBullets[1] + " bullet/s")
 
 
     //Starts game with the while loop
@@ -44,41 +44,50 @@ fun main() {
             val opponent = if (player == 0) 1 else 0
             //The current player swaps from player 1 to player 2 once the player 1 finishes their turn
             //Vice versa with the opponent
-            val currentPlayer = playerList[player]
-            val currentOpponent = playerList[opponent]
+            val currentPlayer = playerNames[player]
+            val currentOpponent = playerNames[opponent]
 
             //Lets the player choose what they want to do
             println("Look away $currentOpponent!")
-            val action = getAction(currentPlayer, playerActions)
 
-            when (action) {
-                SHOOT -> {
-                    //This function checks if you have enough bullets to shoot. If you don't it will return false, and you will have to do it again
-                    if (checkBullets(bulletsList[player])) {
-                        bulletsList[player]--  
-                        println("You shot, congrats!".red())
-                        //actionList holds the actions of both players
-                        actionList.add("SHOOT")
-                        //After checking that you have a viable amount of bullets to shoot, you are allowed to shoot
+            while(true) {
+                val action = getAction(currentPlayer, playerActions)
 
-                        //The function gap adds spaces so the next player cannot see what the previous player did
+                when (action) {
+                    SHOOT -> {
+                        //This function checks if you have enough bullets to shoot. If you don't it will return false, and you will have to do it again
+                        if (checkBullets(playerBullets[player])) {
+                            playerBullets[player]--
+                            println("You shot, congrats!".red())
+                            //actionList holds the actions of both players
+                            playerActionNames.add("SHOOT")
+                            //After checking that you have a viable amount of bullets to shoot, you are allowed to shoot
+
+                            //The function gap adds spaces so the next player cannot see what the previous player did
+                            gap()
+                            break
+                        }
+                        else {
+                            continue
+                        }
+                    }
+
+                    PROTECT -> {
+                        //Protecting stops you from getting damaged if the other player decides to shoot.
+                        println("You have protected yourself!".green())
+                        playerActionNames.add("PROTECT")
                         gap()
-                    }
+                        break
                     }
 
-                PROTECT -> {
-                    //Protecting stops you from getting damaged if the other player decides to shoot.
-                    println("You have protected yourself!".green())
-                    actionList.add("PROTECT")
-                    gap()
-                }
-
-                RELOAD -> {
-                    //Reloading gives the player 1 bullet, with the risk of being shot
-                    bulletsList[0]++
-                    println("You reloaded, risky!".blue())
-                    actionList.add("RELOAD")
-                    gap()
+                    RELOAD -> {
+                        //Reloading gives the player 1 bullet, with the risk of being shot
+                        playerBullets[0]++
+                        println("You reloaded, risky!".blue())
+                        playerActionNames.add("RELOAD")
+                        gap()
+                        break
+                    }
                 }
             }
         }
@@ -92,25 +101,25 @@ fun main() {
             println("Thank you, here's the aftermath!")
             println()
             println()
-        println(actionList)
+        println(playerActionNames)
 
 
-        println(playerList[0] + " chose to " + actionList[0] + " and " + playerList[1] + " chose to " + actionList[1])
+        println(playerNames[0] + " chose to " + playerActionNames[0] + " and " + playerNames[1] + " chose to " + playerActionNames[1])
 
         // Show the result of the players actions
-        println(showAftermath(playerActions, playerList, healthList, ""))
+        println(showAftermath(playerActions, playerNames, playerHealths, ""))
         // And clear them out for next time
         playerActions.clear()
-        actionList.clear()
+        playerActionNames.clear()
 
         println()
-        println(playerList[0] + ", you have " + healthList[0] + " health and " + playerList[1] + ",  you have " + healthList[1] + " health.")
+        println(playerNames[0] + ", you have " + playerHealths[0] + " health and " + playerNames[1] + ",  you have " + playerHealths[1] + " health.")
 
-        if (healthList[0] == EMPTY) {
-            println("Congratulations" + playerList[1] + ", you win!")
+        if (playerHealths[0] == EMPTY) {
+            println("Congratulations" + playerNames[1] + ", you win!")
             break
-        } else if (healthList[1] == EMPTY) {
-            println("Congratulations" + playerList[0] + ", you win!")
+        } else if (playerHealths[1] == EMPTY) {
+            println("Congratulations" + playerNames[0] + ", you win!")
             break
         } else {
             println("Nobody died yet so lets continue!")
