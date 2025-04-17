@@ -26,8 +26,6 @@ fun main() {
     val playerActions = mutableListOf<Char>()
     playerHealths.add(3)
     playerHealths.add(3)
-    var player = 0
-    var opponent = 1
 
     showInstructions()
 
