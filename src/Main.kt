@@ -12,11 +12,11 @@
  * =====================================================================
  */
 
-
+//These are the constant values that are used globally
+//SHOOT, PROTECT and RELOAD are the keys players press in order to do their action
 const val SHOOT = 'S'
 const val PROTECT = 'P'
 const val RELOAD = 'R'
-//const val DOUBLE = 'D'
 const val EMPTY = 0
 fun main() {
     val playerNames = mutableListOf<String>()
@@ -26,14 +26,14 @@ fun main() {
     val playerActions = mutableListOf<Char>()
     playerHealths.add(3)
     playerHealths.add(3)
+    var player = 0
+    var opponent = 1
 
     showInstructions()
 
     getPlayer(playerNames)
     setupBullets(playerBullets)
 
-    println(playerNames[0] + ", you have " + playerBullets[0] + " bullet/s")
-    println(playerNames[1] + ", you have " + playerBullets[1] + " bullet/s")
 
 
     //Starts game with the while loop
@@ -49,14 +49,15 @@ fun main() {
 
             //Lets the player choose what they want to do
             println("Look away $currentOpponent!")
+            println("$currentPlayer, you have " + playerBullets[player] + " bullet/s")
 
             while(true) {
-                val action = getAction(currentPlayer, playerActions)
-
-                when (action) {
+                when (val action = getAction(currentPlayer, playerActions)) {
                     SHOOT -> {
                         //This function checks if you have enough bullets to shoot. If you don't it will return false, and you will have to do it again
                         if (checkBullets(playerBullets[player])) {
+                            playerActions.add(action)
+                            println(playerActions)
                             playerBullets[player]--
                             println("You shot, congrats!".red())
                             //actionList holds the actions of both players
@@ -76,14 +77,18 @@ fun main() {
                         //Protecting stops you from getting damaged if the other player decides to shoot.
                         println("You have protected yourself!".green())
                         playerActionNames.add("PROTECT")
+                        playerActions.add(action)
+                        println(playerActions)
                         gap()
                         break
                     }
 
                     RELOAD -> {
                         //Reloading gives the player 1 bullet, with the risk of being shot
-                        playerBullets[0]++
+                        playerBullets[player]++
                         println("You reloaded, risky!".blue())
+                        playerActions.add(action)
+                        println(playerActions)
                         playerActionNames.add("RELOAD")
                         gap()
                         break
@@ -166,13 +171,13 @@ fun getString(prompt: String): String {
     return userInput
 }
 
-fun getPlayer(playerList: MutableList<String>) {
+fun getPlayer(playerNames: MutableList<String>) {
     //Gets player
 
     val player1 = getString("Player 1, what is your name? ")
     val player2 = getString("Player 2, what is your name? ")
-    playerList.add(player1)
-    playerList.add(player2)
+    playerNames.add(player1)
+    playerNames.add(player2)
     }
 fun setupBullets(bulletsList: MutableList<Int>) {
     bulletsList.add(1)
@@ -181,15 +186,15 @@ fun setupBullets(bulletsList: MutableList<Int>) {
 
 
 
-fun getAction(playerName: String, aftermathCharList: MutableList<Char> ): Char {
+fun getAction(playerName: String, playerActions: MutableList<Char> ): Char {
     //Gets player's action as a Char which corresponds to a constant value
     while(true) {
         val playerAction = getString("$playerName, what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
         val action = playerAction.uppercase().first()
 
         if (action == SHOOT || action == RELOAD || action == PROTECT) {
-            aftermathCharList.add(action)
-            println(aftermathCharList)
+
+
             return action
         }
 
@@ -198,7 +203,7 @@ fun getAction(playerName: String, aftermathCharList: MutableList<Char> ): Char {
 }
 
 
-fun checkBullets(numBullets: Int): Boolean {
+fun checkBullets(numBullets: Int ): Boolean {
 
     if (numBullets != EMPTY) {
         println("You have enough bullets to shoot!")
@@ -209,30 +214,30 @@ fun checkBullets(numBullets: Int): Boolean {
         return false
     }
 }
-fun showAftermath(aftermathCharList: MutableList<Char>, playerList: List<String>, healthList: MutableList<Int>, aftermath: String) : String {
-    if (aftermathCharList[0] == SHOOT && aftermathCharList[1] == PROTECT) {
-        val aftermath = (playerList[0] + " you tried to shoot but " + playerList[1] + " protected")
+fun showAftermath(playerActions: MutableList<Char>, playerNames: List<String>, playerHealths: MutableList<Int>, aftermath: String) : String {
+    if (playerActions[0] == SHOOT && playerActions[1] == PROTECT) {
+        val aftermath = (playerNames[0] + " you tried to shoot but " + playerNames[1] + " protected")
         return aftermath
     }
-    else if (aftermathCharList[1] == SHOOT && aftermathCharList[0] == PROTECT) {
-        val aftermath = (playerList[1] + " you tried to shoot but " + playerList[0] + " protected")
+    else if (playerActions[1] == SHOOT && playerActions[0] == PROTECT) {
+        val aftermath = (playerNames[1] + " you tried to shoot but " + playerNames[0] + " protected")
         return aftermath
     }
-    else if (aftermathCharList[0] == RELOAD && aftermathCharList[1] == SHOOT) {
-        val aftermath = (playerList[1] + ", you shot!")
-        healthList[0]--
+    else if (playerActions[0] == RELOAD && playerActions[1] == SHOOT) {
+        val aftermath = (playerNames[1] + ", you shot!")
+        playerHealths[0]--
         return aftermath
     }
-    else if (aftermathCharList[1] == RELOAD && aftermathCharList[0] == SHOOT) {
-        val aftermath = (playerList[1] + ", you shot!")
-        healthList[1]--
+    else if (playerActions[1] == RELOAD && playerActions[0] == SHOOT) {
+        val aftermath = (playerNames[1] + ", you shot!")
+        playerHealths[1]--
         return aftermath
     }
-    else if (aftermathCharList[0] == SHOOT && aftermathCharList[1] == SHOOT) {
-        val aftermath = (playerList[0] + playerList[1] + ", you both shot which means nothing happens other than you both lose a bullet!")
+    else if (playerActions[0] == SHOOT && playerActions[1] == SHOOT) {
+        val aftermath = (playerNames[0] + " and " + playerNames[1] + ", you both shot which means nothing happens other than you both lose a bullet!")
         return aftermath
     }
-    else if (aftermathCharList[1] == PROTECT && aftermathCharList[0] == RELOAD || aftermathCharList[0] == PROTECT && aftermathCharList[1] == RELOAD || aftermathCharList[1] == RELOAD && aftermathCharList[0] == RELOAD || aftermathCharList[0] == PROTECT && aftermathCharList[1] == PROTECT) {
+    else if (playerActions[1] == PROTECT && playerActions[0] == RELOAD || playerActions[0] == PROTECT && playerActions[1] == RELOAD || playerActions[1] == RELOAD && playerActions[0] == RELOAD || playerActions[0] == PROTECT && playerActions[1] == PROTECT) {
         val aftermath = ("Nothing happened")
         return aftermath
 
