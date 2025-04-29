@@ -52,17 +52,18 @@ Player 1 and 2's actions should be separate, and they should have an order of th
 
 ---
 
-## Winning
+## Player's winning and showing aftermath
 
-When one or the other players health is 0, the game ends and the other player should win.
+When one or the other players health is 0, the game ends and the other player should win. Depending on the combination of actions, what the aftermath shows/returns as should be different
 
-### Test Data To Use
+## Test Data Used
 
-I will test whether I (the player) am able to break out of the loop by winning or if I am stuck in a forever loop. I will also test to see how the health(hp) dwindles as actions happen.
+I should be able to break out of the loop by winning and not be stuck in a forever loop. I will also test to see how the health dwindles as actions happen and test every combination of aftermath to see if it showed the correct text.
+
 
 ### Expected Test Result
 
-The game should keep looping until this condition is met. Then it should give congrats to the winning player after the other one's health hits 0.
+The game should keep looping until this condition is met. Then it should give congratulations to the winning player after the other player's health hits 0. The aftermath it shows should be the correct one that corresponds to the players' actions.
 
 ---
 

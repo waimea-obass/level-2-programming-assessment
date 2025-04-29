@@ -56,9 +56,11 @@ fun main() {
             while(true) {
                 when (val action = getAction(currentPlayer)) {
                     SHOOT -> {
+                        println()
                         //This function checks if you have enough bullets to shoot. If you don't it will return false, and you will have to do it again
                         //After checking that you have a viable amount of bullets to shoot, you are allowed to shoot
                         if (checkBullets(playerBullets[player])) {
+                            println()
                             //Adds the action(which is a Char) into the list this will be useful later when the players see the aftermath of their actions
                             playerActions.add(action)
                             //If they can shoot it takes away a bullet from the player
@@ -78,6 +80,7 @@ fun main() {
                     }
 
                     PROTECT -> {
+                        println()
                         //Protecting stops you from getting damaged if the other player decides to shoot.
                         println("You have protected yourself!".green())
                         playerActionNames.add("PROTECT")
@@ -89,6 +92,7 @@ fun main() {
                     }
 
                     RELOAD -> {
+                        println()
                         //Reloading gives the player 1 bullet, with the risk of being shot
                         playerBullets[player]++
                         println("You reloaded, risky!".blue())
@@ -125,16 +129,18 @@ fun main() {
         println(playerNames[0] + ", you have " + playerHealths[0] + " health and " + playerNames[1] + " has " + playerHealths[1] + " health.")
         //Checks to see whether a player has won or not and congratulates them if they do
         if (playerHealths[0] == EMPTY) {
-            println("Congratulations" + playerNames[1] + ", you win!")
+            println("Congratulations" + playerNames[1] + ", you win!".yellow())
             break
         } else if (playerHealths[1] == EMPTY) {
-            println("Congratulations" + playerNames[0] + ", you win!")
+            println("Congratulations" + playerNames[0] + ", you win!".yellow())
             break
         } else {
             //If nobody dies, the game goes onto the next round
             println("Nobody has died yet so lets continue!")
+            println()
+            println("-----------------------------------------------------------------------------------------")
+            println()
             endTurn()
-            gap()
             continue
         }
 
@@ -147,14 +153,14 @@ fun main() {
 fun showInstructions() {
     //Game instructions
     println()
-    println("--------------------WELCOME TO OK GUNS!--------------------------------------------------")
+    println("--------------------WELCOME TO OK GUNS!--------------------------------------------------".yellow())
     println()
     println("This game is very simple.")
     println("Players will take turns choosing an action, either to Shoot or Reload their guns or to Protect themselves from harm.")
     println("To be able to shoot you must have a bullet and when you shoot you lose a bullet. In order to get bullets you must reload, but when you reload is the only time that you are vulnerable to getting shot.")
     println("When you are shot you lose 1 of your 3 health.")
     println()
-    println("This game is set so when player 1 takes a turn player 2 must look away so the actions the players' choose is anonymous. Then you will learn the aftermath of your choices. Eg: Player 1 tried to reload but player2 shot them")
+    println("This game is set so when player 1 takes a turn player 2 must look away so the actions the players' choose is anonymous. Then you will learn the aftermath of your choices. Eg: Player 1 tried to reload but Player 2 shot them")
     println("The aim of the game is to get the other players health to 0")
     println()
     println("Have fun!")
@@ -207,11 +213,11 @@ fun getAction(playerName: String ): Char {
 fun checkBullets(numBullets: Int ): Boolean {
 //If you don't have any bullets you cannot shoot, this makes sure that you have enough
     if (numBullets != EMPTY) {
-        println("You have enough bullets to shoot!")
+        println("You have enough bullets to shoot!".blue())
         return true
     }
     else  {
-        println("You don't have enough bullets to shoot!")
+        println("You don't have enough bullets to shoot!".red())
         return false
     }
 }
