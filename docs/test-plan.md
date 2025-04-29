@@ -10,7 +10,7 @@ Terminology:
 
 ---
 
-## Player's lists and bullet lists
+## Lists of players and player's bullets
 
 Both lists should contain their respected items. The player's should input their name and the code should store that information. The bullets should start at 0 and the list should contain both players bullets
 
@@ -36,7 +36,7 @@ I will test if the players input works, how the character recognition works, and
 
 This should output the correct action on both players and then use the correct effect of those actions, such as shooting a reloading player results in their health diminishing by 1 or shooting makes you lose a bullet even if protected.
 
----
+---            mm nj vc 
 
 ## Player's taking turns
 

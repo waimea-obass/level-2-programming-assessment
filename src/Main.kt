@@ -18,6 +18,7 @@ const val PROTECT = 'P'
 const val RELOAD = 'R'
 const val EMPTY = 0
 fun main() {
+    //All the lists that are used
     val playerNames = mutableListOf<String>()
     val playerBullets = mutableListOf<Int>()
     val playerHealths = mutableListOf<Int>()
@@ -195,8 +196,6 @@ fun getAction(playerName: String ): Char {
         val action = playerAction.uppercase().first()
     //Only returns if the action is valid
         if (action == SHOOT || action == RELOAD || action == PROTECT) {
-
-
             return action
         }
 
