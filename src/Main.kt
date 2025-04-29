@@ -129,10 +129,10 @@ fun main() {
         println(playerNames[0] + ", you have " + playerHealths[0] + " health and " + playerNames[1] + " has " + playerHealths[1] + " health.")
         //Checks to see whether a player has won or not and congratulates them if they do
         if (playerHealths[0] == EMPTY) {
-            println("Congratulations" + playerNames[1] + ", you win!".yellow())
+            println("Congratulations " + playerNames[1] + ", you win!".yellow())
             break
         } else if (playerHealths[1] == EMPTY) {
-            println("Congratulations" + playerNames[0] + ", you win!".yellow())
+            println("Congratulations " + playerNames[0] + " you win!".yellow())
             break
         } else {
             //If nobody dies, the game goes onto the next round
@@ -246,7 +246,7 @@ fun showAftermath(playerActions: MutableList<Char>, playerNames: List<String>, p
         return aftermath
     }
     else if (playerActions[1] == RELOAD && playerActions[0] == SHOOT) {
-        val aftermath = (playerNames[1] + ", you shot!")
+        val aftermath = (playerNames[0] + ", you shot!")
         playerHealths[1]--
         return aftermath
     }
