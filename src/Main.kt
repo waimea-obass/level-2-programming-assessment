@@ -24,14 +24,17 @@ fun main() {
     val playerHealths = mutableListOf<Int>()
     val playerActionNames = mutableListOf<String>()
     val playerActions = mutableListOf<Char>()
-    //Each players' healths are added into the list. You get 3 health each.
-    playerHealths.add(3)
-    playerHealths.add(3)
+    //If you don't have a limit on protects you can theoretically protect forever so this list will count them
+    val playerProtects = mutableListOf<Int>()
+
 
     showInstructions()
 
     getPlayer(playerNames)
     setupBullets(playerBullets)
+    setupHealth(playerHealths)
+    setupProtects(playerProtects)
+
 
 
 
@@ -81,14 +84,17 @@ fun main() {
 
                     PROTECT -> {
                         println()
-                        //Protecting stops you from getting damaged if the other player decides to shoot.
-                        println("You have protected yourself!".green())
-                        playerActionNames.add("PROTECT")
-                        playerActions.add(action)
-                        println(playerActions)
-                        endTurn()
-                        gap()
-                        break
+                        if (checkProtects(playerProtects[player])) {
+                            //Protecting stops you from getting damaged if the other player decides to shoot.
+                            println("You have protected yourself!".green())
+                            playerActionNames.add("PROTECT")
+                            playerProtects[0].add(1)
+                            playerActions.add(action)
+                            println(playerActions)
+                            endTurn()
+                            gap()
+                            break
+                        }
                     }
 
                     RELOAD -> {
@@ -99,6 +105,7 @@ fun main() {
                         playerActions.add(action)
                         println(playerActions)
                         playerActionNames.add("RELOAD")
+                        playerProtects[player].clear()
                         endTurn()
                         gap()
                         break
@@ -187,10 +194,19 @@ fun getPlayer(playerNames: MutableList<String>) {
     playerNames.add(player1)
     playerNames.add(player2)
     }
-fun setupBullets(bulletsList: MutableList<Int>) {
+fun setupBullets(playerBullets: MutableList<Int>) {
     //Adds each players' bullets into the list
-    bulletsList.add(1)
-    bulletsList.add(1)
+    playerBullets.add(1)
+    playerBullets.add(1)
+}
+fun setupHealth(playerHealths: MutableList<Int>) {
+    //Adds each players' health into the list
+    playerHealths.add(3)
+    playerHealths.add(3)
+}
+fun setupProtects(playerProtects: MutableList<Int>) {
+    playerProtects.add(0)
+    playerProtects.add(0)
 }
 
 
@@ -218,6 +234,16 @@ fun checkBullets(numBullets: Int ): Boolean {
     }
     else  {
         println("You don't have enough bullets to shoot!".red())
+        return false
+    }
+}
+fun checkProtects(numProtects: Int ): Boolean {
+//If you don't have any bullets you cannot shoot, this makes sure that you have enough
+    if (numProtects != 3 ) {
+        return true
+    }
+    else  {
+        println("You have used too many PROTECTS in a row!".red())
         return false
     }
 }
