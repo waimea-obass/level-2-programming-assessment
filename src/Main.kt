@@ -27,16 +27,12 @@ fun main() {
     //If you don't have a limit on protects you can theoretically protect forever so this list will count them
     val playerProtects = mutableListOf<Int>()
 
-
     showInstructions()
 
     getPlayer(playerNames)
     setupBullets(playerBullets)
     setupHealth(playerHealths)
     setupProtects(playerProtects)
-
-
-
 
     //Starts game with the while loop
     while (true) {
@@ -68,6 +64,8 @@ fun main() {
                             playerActions.add(action)
                             //If they can shoot it takes away a bullet from the player
                             playerBullets[player]--
+                            //The player didn't choose PROTECT so the count resets
+                            playerProtects[player] = 0
                             println("You shot, congrats!".red())
                             playerActionNames.add("SHOOT")
 
@@ -88,7 +86,7 @@ fun main() {
                             //Protecting stops you from getting damaged if the other player decides to shoot.
                             println("You have protected yourself!".green())
                             playerActionNames.add("PROTECT")
-                            playerProtects[0].add(1)
+                            playerProtects[player]++
                             playerActions.add(action)
                             println(playerActions)
                             endTurn()
@@ -105,7 +103,7 @@ fun main() {
                         playerActions.add(action)
                         println(playerActions)
                         playerActionNames.add("RELOAD")
-                        playerProtects[player].clear()
+                        playerProtects[player] = 0
                         endTurn()
                         gap()
                         break
@@ -117,7 +115,7 @@ fun main() {
         //--------------------------------------AFTERMATH-------------------------------------------------------------------------
         //After both players have chosen their choices, the aftermath will show what consequences/rewards they get
 
-        println("-------------------------------------AFTERMATH-------------------------------------")
+        println("-------------------------------------AFTERMATH-------------------------------------------------")
         println()
         println("Thank you, here's the aftermath!")
         println()
@@ -136,10 +134,10 @@ fun main() {
         println(playerNames[0] + ", you have " + playerHealths[0] + " health and " + playerNames[1] + " has " + playerHealths[1] + " health.")
         //Checks to see whether a player has won or not and congratulates them if they do
         if (playerHealths[0] == EMPTY) {
-            println("Congratulations " + playerNames[1] + ", you win!".yellow())
+            println("Congratulations ".yellow() + playerNames[1].yellow() + ", you win!".yellow())
             break
         } else if (playerHealths[1] == EMPTY) {
-            println("Congratulations " + playerNames[0] + " you win!".yellow())
+            println("Congratulations ".yellow() + playerNames[0].yellow() + " you win!".yellow())
             break
         } else {
             //If nobody dies, the game goes onto the next round
@@ -238,12 +236,15 @@ fun checkBullets(numBullets: Int ): Boolean {
     }
 }
 fun checkProtects(numProtects: Int ): Boolean {
-//If you don't have any bullets you cannot shoot, this makes sure that you have enough
-    if (numProtects != 3 ) {
+    /*
+    If you don't have a limit on protects in a row you can theoretically protect forever and the game never ends!
+    This makes it so if you choose to PROTECT too much in a row, (3 times) you can't
+    */
+    if (numProtects <= 3 ) {
         return true
     }
     else  {
-        println("You have used too many PROTECTS in a row!".red())
+        println("You have used $numProtects PROTECTS in a row! Be more original! ".red())
         return false
     }
 }
