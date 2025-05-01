@@ -36,7 +36,7 @@ I will test if the players input works, how the character recognition works, and
 
 This should output the correct action on both players and then use the correct effect of those actions, such as shooting a reloading player results in their health diminishing by 1 or shooting makes you lose a bullet even if protected.
 
----            mm nj vc 
+--- 
 
 ## Player's taking turns
 
@@ -44,7 +44,7 @@ Player's take 1 turn each to choose their action. Then, the aftermath of how tho
 
 ### Test Data To Use
 
-II will use while loops to separate player 1 and 2s turns and also do multiple testing of how the aftermath happens. 
+I will put the players' turns are in a for loop of (0, 1) (Player 1 and 2) which loops back around when it is the second player's turn and ends once each player has had their turn. I will do multiple testing to see if this works.
 
 ### Expected Test Result
 
@@ -66,5 +66,7 @@ I should be able to break out of the loop by winning and not be stuck in a forev
 The game should keep looping until this condition is met. Then it should give congratulations to the winning player after the other player's health hits 0. The aftermath it shows should be the correct one that corresponds to the players' actions.
 
 ---
+
+
 
 

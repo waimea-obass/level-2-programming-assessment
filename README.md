@@ -1,4 +1,4 @@
-# 
+# OK GUNS
 
 by Ollie Bass
 
@@ -13,7 +13,6 @@ The project is written in the [Kotlin](https://kotlinlang.org) programming langu
 - Using non-trivial string manipulation
 - Using additional non-core libraries
 
-** EDIT LIST ABOVE TO MATCH YOUR PROJECT**
 
 ---
 
@@ -27,7 +26,7 @@ The project is written in the [Kotlin](https://kotlinlang.org) programming langu
 
 ## Project Description
 
-**Old Gold is a strategy game where you move coins through a 1x1 grid in order to get the gold out**
+**OK Guns is a strategy game about trying to predict what your opponents do and outsmart them. You have 3 options you can do. SHOOT: You may shoot your gun at the opponent, if they are reloading you successfully damage them; you can only do this with at least one bullet. You can PROTECT, which means you can shield yourself from an oncoming shot, which wastes their bullet if they shoot you (You can't do 3 Protects in a row!) or you can RELOAD which means you are vulnerable to getting shot, but you gain a bullet. You start with 1 bullet and 3 health each. First to make the other player's health go to zero wins. Have Fun!  **
 
 
 

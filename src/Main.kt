@@ -11,12 +11,13 @@
  * Notes: This is a game called OK Guns
  * =====================================================================
  */
+
 //These are the constant values that are used globally
 //SHOOT, PROTECT and RELOAD are the keys players press in order to do their action
 const val SHOOT = 'S'
 const val PROTECT = 'P'
 const val RELOAD = 'R'
-const val EMPTY = 0
+
 fun main() {
     //All the lists that are used
     val playerNames = mutableListOf<String>()
@@ -34,7 +35,9 @@ fun main() {
     setupHealth(playerHealths)
     setupProtects(playerProtects)
 
-    //Starts game with the while loop
+    /**
+     *  GAME LOOP STARTS
+     */
     while (true) {
         // Allows each player to have a turn
         for (player in listOf(0, 1)) {
@@ -88,7 +91,6 @@ fun main() {
                             playerActionNames.add("PROTECT")
                             playerProtects[player]++
                             playerActions.add(action)
-                            println(playerActions)
                             endTurn()
                             gap()
                             break
@@ -101,7 +103,6 @@ fun main() {
                         playerBullets[player]++
                         println("You reloaded, risky!".blue())
                         playerActions.add(action)
-                        println(playerActions)
                         playerActionNames.add("RELOAD")
                         playerProtects[player] = 0
                         endTurn()
@@ -112,8 +113,11 @@ fun main() {
             }
         }
 
-        //--------------------------------------AFTERMATH-------------------------------------------------------------------------
-        //After both players have chosen their choices, the aftermath will show what consequences/rewards they get
+        /**
+         * --------------------------------------AFTERMATH-------------------------------------------------------------------------
+         *         After both players have chosen their choices, the aftermath will show what consequences/rewards they get
+         */
+
 
         println("-------------------------------------AFTERMATH-------------------------------------------------")
         println()
@@ -133,10 +137,10 @@ fun main() {
         println()
         println(playerNames[0] + ", you have " + playerHealths[0] + " health and " + playerNames[1] + " has " + playerHealths[1] + " health.")
         //Checks to see whether a player has won or not and congratulates them if they do
-        if (playerHealths[0] == EMPTY) {
+        if (playerHealths[0] == 0) {
             println("Congratulations ".yellow() + playerNames[1].yellow() + ", you win!".yellow())
             break
-        } else if (playerHealths[1] == EMPTY) {
+        } else if (playerHealths[1] == 0) {
             println("Congratulations ".yellow() + playerNames[0].yellow() + " you win!".yellow())
             break
         } else {
@@ -208,7 +212,9 @@ fun setupProtects(playerProtects: MutableList<Int>) {
 }
 
 
-
+/**
+ * This function asks the player for an Action, it only returns if valid
+ */
 fun getAction(playerName: String ): Char {
     //Gets player's action as a Char which corresponds to a constant value
     while(true) {
@@ -223,10 +229,12 @@ fun getAction(playerName: String ): Char {
 
 }
 
+/**
+ * If you don't have any bullets you cannot shoot, this makes sure that you have enough
+ */
 
 fun checkBullets(numBullets: Int ): Boolean {
-//If you don't have any bullets you cannot shoot, this makes sure that you have enough
-    if (numBullets != EMPTY) {
+    if (numBullets != 0) {
         println("You have enough bullets to shoot!".blue())
         return true
     }
@@ -235,12 +243,14 @@ fun checkBullets(numBullets: Int ): Boolean {
         return false
     }
 }
+
+/**
+ * If you don't have a limit on protects in a row you can theoretically protect forever and the game never ends!
+ * This makes it so if you choose to PROTECT too much in a row, (3 times) you can't
+ */
 fun checkProtects(numProtects: Int ): Boolean {
-    /*
-    If you don't have a limit on protects in a row you can theoretically protect forever and the game never ends!
-    This makes it so if you choose to PROTECT too much in a row, (3 times) you can't
-    */
-    if (numProtects <= 3 ) {
+
+    if (numProtects != 3 ) {
         return true
     }
     else  {
@@ -257,6 +267,9 @@ fun endTurn() {
     getString("Press any letter to continue:")
 }
 
+/**
+ * This function takes both of the player's actions and determines which aftermath the players get.
+ */
 fun showAftermath(playerActions: MutableList<Char>, playerNames: List<String>, playerHealths: MutableList<Int>, aftermath: String) : String {
     //This is a list of every combination of possible outcomes. This function shows the players what happened as a result of their actions.
     if (playerActions[0] == SHOOT && playerActions[1] == PROTECT) {
