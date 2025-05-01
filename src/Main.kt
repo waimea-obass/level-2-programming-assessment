@@ -54,7 +54,6 @@ fun main() {
             //Shows players' bullet counts
             println("$currentPlayer, you have " + playerBullets[player] + " bullet/s")
             println()
-            //This is the game loop
             while(true) {
                 when (val action = getAction(currentPlayer)) {
                     SHOOT -> {
