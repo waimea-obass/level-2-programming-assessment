@@ -17,6 +17,8 @@
 const val SHOOT = 'S'
 const val PROTECT = 'P'
 const val RELOAD = 'R'
+const val HEAL = 'H'
+const val DOUBLE = 'D'
 
 fun main() {
     //All the lists that are used
@@ -103,6 +105,17 @@ fun main() {
                         println("You reloaded, risky!".blue())
                         playerActions.add(action)
                         playerActionNames.add("RELOAD")
+                        playerProtects[player] = 0
+                        endTurn()
+                        gap()
+                        break
+                    }
+                    HEAL -> {
+                        println()
+                        playerHealths[player]++
+                        println("You heal riskily, if you get shot now it's bad!".red())
+                        playerActions.add(action)
+                        playerActionNames.add("HEAL")
                         playerProtects[player] = 0
                         endTurn()
                         gap()
@@ -220,7 +233,7 @@ fun getAction(playerName: String ): Char {
         val playerAction = getString("$playerName, what do you want to do? Either 'S': Shoot 'R': Reload or 'P': Protect: ")
         val action = playerAction.uppercase().first()
     //Only returns if the action is valid
-        if (action == SHOOT || action == RELOAD || action == PROTECT) {
+        if (action == SHOOT || action == RELOAD || action == PROTECT || action == HEAL || action == DOUBLE) {
             return action
         }
 
@@ -274,31 +287,44 @@ fun showAftermath(playerActions: MutableList<Char>, playerNames: List<String>, p
     if (playerActions[0] == SHOOT && playerActions[1] == PROTECT) {
         val aftermath = (playerNames[0] + " you tried to shoot but " + playerNames[1] + " protected")
         return aftermath
-    }
-    else if (playerActions[1] == SHOOT && playerActions[0] == PROTECT) {
+    } else if (playerActions[1] == SHOOT && playerActions[0] == PROTECT) {
         val aftermath = (playerNames[1] + " you tried to shoot but " + playerNames[0] + " protected")
         return aftermath
-    }
-    else if (playerActions[0] == RELOAD && playerActions[1] == SHOOT) {
+    } else if (playerActions[0] == RELOAD && playerActions[1] == SHOOT) {
         val aftermath = (playerNames[1] + ", you shot!")
         playerHealths[0]--
         return aftermath
-    }
-    else if (playerActions[1] == RELOAD && playerActions[0] == SHOOT) {
+    } else if (playerActions[1] == RELOAD && playerActions[0] == SHOOT) {
         val aftermath = (playerNames[0] + ", you shot!")
         playerHealths[1]--
         return aftermath
-    }
-    else if (playerActions[0] == SHOOT && playerActions[1] == SHOOT) {
-        val aftermath = (playerNames[0] + " and " + playerNames[1] + ", you both shot which means nothing happens other than you both lose a bullet!")
+    } else if (playerActions[0] == SHOOT && playerActions[1] == SHOOT) {
+        val aftermath =
+            (playerNames[0] + " and " + playerNames[1] + ", you both shot which means nothing happens other than you both lose a bullet!")
         return aftermath
-    }
-    else if (playerActions[1] == PROTECT && playerActions[0] == RELOAD || playerActions[0] == PROTECT && playerActions[1] == RELOAD || playerActions[1] == RELOAD && playerActions[0] == RELOAD || playerActions[0] == PROTECT && playerActions[1] == PROTECT) {
+    } else if (playerActions[1] == PROTECT && playerActions[0] == RELOAD || playerActions[0] == PROTECT && playerActions[1] == RELOAD || playerActions[1] == RELOAD && playerActions[0] == RELOAD || playerActions[0] == PROTECT && playerActions[1] == PROTECT) {
         val aftermath = ("Nothing happened")
         return aftermath
 
+    } else if (playerActions[0] == HEAL && playerActions[1] == SHOOT) {
+        val aftermath =
+            (playerNames[0] + " you tried to heal but " + playerNames[1] + " shot you losing 2 health instead of 1!!")
+        playerHealths[0]--
+        return aftermath
+    } else if (playerActions[0] == HEAL && playerActions[1] == RELOAD || playerActions[1] == PROTECT) {
+        val aftermath = (playerNames[0] + " you healed successfully as " + playerNames[1] + " didn't shoot")
+        playerHealths[0]++
+        return aftermath
     }
-    else {
+        else if (playerActions[1] == HEAL && playerActions[0] == SHOOT) {
+            val aftermath = (playerNames[1] + " you tried to heal but " + playerNames[0] + " shot you losing 2 health instead of 1!!")
+            playerHealths[1]--
+            return aftermath
+        } else if (playerActions[1] == HEAL && playerActions[0] == RELOAD || playerActions[0] == PROTECT) {
+            val aftermath = (playerNames[1] + " you healed successfully as " + playerNames[0] + " didn't shoot")
+            playerHealths[1]++
+            return aftermath
+    } else {
         return aftermath
     }
 }

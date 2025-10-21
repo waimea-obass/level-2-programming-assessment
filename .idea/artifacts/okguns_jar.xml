@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="project:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/project_jar</output-path>
+  <artifact type="jar" name="okguns:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/okguns_jar</output-path>
     <root id="archive" name="project.jar">
-      <element id="module-output" name="project" />
+      <element id="module-output" name="ok_guns" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/2.1.10/kotlin-stdlib-2.1.10.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar" path-in-jar="/" />
     </root>
