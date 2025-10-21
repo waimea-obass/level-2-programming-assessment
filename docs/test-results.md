@@ -19,8 +19,10 @@ I will run the code multiple times to test if they contain the right contents an
 All lists do their respective functions. It asks for the players names and uses them throughout. The bullet number of the players goes up when reloading and down when shooting. It also clears the lists after the round is over. Each player's healths also go down when being shot successfully. 
 
 ![s,s.png](images/s,s.png)
+
 I had to fix an error where the player would press shoot even though they did not have any bullets, and it would still save their shooting as their action. To fix that I had to take the add action out of my function and put it after the bullet check. 
 Here you can see that by printing out the list it still added the S(SHOOT) even though it was invalid.
+
 ---
 
 ## Player's taking turns and finishing rounds
@@ -40,6 +42,7 @@ When the aftermath is over and all players have read what happened and the game 
 I had to create a function for this as before it would just gone onto the next round and made a massive gap which made the players have to painfully scroll back up to read the aftermath.
 
 ---
+
 ## Player's winning and showing aftermath
 
 When one or the other players health is 0, the game ends and the other player should win. Depending on the combination of actions, what the aftermath shows/returns as should be different
@@ -59,6 +62,7 @@ When taking a turn the character of your action (S,P or R) is recorded in the pl
 I had an issue where playerActions and playerNameActions which are both different lists. (One is used to determine what happens in aftermath because of the two choices. eg: Nothing happens(Because they both protected) and playerActionNames which shows which each player chose (P1 chose to SHOOT and P2 chose to PROTECT.) were both pulled as a STRING list even though the names one is a list of CHAR. 
 
 ---
+
 ## Limit Testing
 
 ![limitProtects.png](images/limitprotects.png)
